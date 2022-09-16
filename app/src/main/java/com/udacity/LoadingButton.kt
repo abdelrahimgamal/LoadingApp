@@ -26,7 +26,6 @@ class LoadingButton @JvmOverloads constructor(
     private var loadingDefaultText = ""
     private var btnDefaultColor = 0
     private var btnLoadingColor = context.getColor(R.color.colorPrimaryDark)
-    private var progressCircleBackgroundColor = ContextCompat.getColor(context, R.color.colorAccent)
     private var textColor = ContextCompat.getColor(context, R.color.white)
     private var loadingText: String = "We Are Loading"
     private lateinit var buttonTextBounds: Rect
@@ -44,6 +43,11 @@ class LoadingButton @JvmOverloads constructor(
         textAlign = Paint.Align.CENTER
         textSize = 55f
         typeface = Typeface.DEFAULT
+    }
+
+    private val circlePaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = context.getColor(R.color.colorAccent)
     }
 
     private var progressCircleAnimator = ValueAnimator.ofFloat(0f, 360f).apply {
@@ -102,6 +106,8 @@ class LoadingButton @JvmOverloads constructor(
                 animatorSet.start()
             }
             else -> {
+                angle = 360f
+                oldAngle = 0
                 // LoadingButton is not doing any Loading so we need to reset to default text
                 buttonText = loadingDefaultText
 
@@ -156,15 +162,21 @@ class LoadingButton @JvmOverloads constructor(
 
 
     private fun Canvas.drawProgressCircleIfLoading() {
+        val bounds = Rect()
+        var text_width = 0
+        var text_height = 0
+        buttonTextPaint.getTextBounds(buttonText, 0, buttonText.length, bounds)
+        text_width = bounds.width()
+        text_height = bounds.height()
         if (buttonState == ButtonState.Loading) {
             val rectf = RectF(
-                (width / 2f) + (200f / 2f) + 16,
-                (height / 2f) - (200f / 2f),
-                (width / 2f) + (200f / 2f) + 16,
-                (height / 2f) - (200f / 2f)
+                (width / 2f) + (text_width / 2f) + 16,
+                (height / 2f) - (text_height / 2f),
+                (width / 2f) + (text_width / 2f) + 16 + 50f,
+                (height / 2f) - (text_height / 2f) + 50f
             )
 
-            drawArc(rectf, 0f, angle, true, buttonTextPaint)
+            drawArc(rectf, 0f, angle, true, circlePaint)
 
 
         }
@@ -215,7 +227,7 @@ class LoadingButton @JvmOverloads constructor(
             ButtonState.Loading -> {
                 drawLoadingBackgroundColor()
                 drawDefaultBackgroundColor()
-                animateCircle(90)
+                animateCircle(100)
             }
             else -> drawColor(btnDefaultColor)
         }

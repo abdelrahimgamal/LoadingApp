@@ -7,20 +7,24 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="30dp"
+        android:id="@+id/motion_base"
+
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".DetailActivity"
+
+        app:layoutDescription="@xml/content_detail_scene"
         tools:showIn="@layout/activity_detail">
 
         <TextView
             android:id="@+id/fileName"
-            android:layout_width="130dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="File Name : "
-            android:textSize="20sp"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,19 +34,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:gravity="start"
             android:layout_height="wrap_content"
-            tools:text="Test"
-            android:textSize="25sp"
+            android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/fileName"
             android:textColor="@color/colorPrimaryDark"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/status"
-            android:layout_width="130dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Status : "
              android:layout_marginTop="8dp"
-            android:textSize="20sp"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fileNameTxt" />
 
@@ -52,8 +55,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:gravity="start"
             android:layout_height="wrap_content"
-            tools:text="Test"
-            android:textSize="25sp"
+            android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/status"
             android:textColor="@color/colorPrimaryDark"
             app:layout_constraintTop_toBottomOf="@+id/fileNameTxt" />
@@ -68,5 +70,5 @@
             android:textColor="@android:color/white"
             />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
